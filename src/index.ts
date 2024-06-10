@@ -17,11 +17,11 @@ app.use(customMorgan);
 
 app.use('/api/v1/track/:id', (req, res, next) => {
   const { id } = req.params;
-  const { q } = (req as any).query;
+  const { courierNameEN } = (req as any).query;
   
   (req as any).id = id;
   
-  if (q === "true") {
+  if (courierNameEN === "tciExpress") {
     
    
       (req as any).controller = tciscrap; 
