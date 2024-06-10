@@ -1,0 +1,37 @@
+{
+  "name": "parcel-tracking",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "nodemon src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@api/track123-api": "file:.api/apis/track123-api",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.13.0",
+    "axios": "^1.7.2",
+    "chalk": "^5.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "morgan": "^1.10.0",
+    "puppeteer": "^22.10.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/cors": "^2.8.17",
+    "@types/morgan": "^1.9.9",
+    "nodemon": "^3.1.2",
+    "ts-node-dev": "^2.0.0"
+  }
+}
