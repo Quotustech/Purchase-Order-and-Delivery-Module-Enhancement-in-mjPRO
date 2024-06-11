@@ -3,6 +3,9 @@ import { CatchAsyncError } from "../../utils/catchAsyncError";
 import puppeteer from "puppeteer";
 
 
+interface mappedValues {
+  [key: string]: string;
+}
 export const tciscrap = CatchAsyncError(async (req: Request, res: Response) => {
   try {
     const id = (req as any).id;
@@ -19,27 +22,52 @@ export const tciscrap = CatchAsyncError(async (req: Request, res: Response) => {
     const page = await browser.newPage();
     await page.goto(url);
 
-    const data = await page.evaluate(() => {
+    const response = await page.evaluate(() => {
       const headerRows = ['Booking Station', 'Delivery Station', 'Booking Date', 'Packets', 'Weight', 'Expected Delivery Date'];
       const secondRow = document.querySelector('tbody tr:nth-child(3)');
-      const mappedValues = {};
+      const mappedValues: mappedValues = {};
 
-      // Iterate through the header rows
+
       headerRows.forEach((header, index) => {
-        // Get the text content of the corresponding <td> element in the second row
-        //@ts-ignore
-        const value = secondRow.querySelector(`td:nth-child(${index + 1})`).innerText.trim();
-       
-        //@ts-ignore
+
+
+        // const value = secondRow?.querySelector(`td:nth-child(${index + 1})`)?.innerText.trim();
+
+        const cell = secondRow?.querySelector(`td:nth-child(${index + 1})`);
+        const value = cell instanceof HTMLElement ? cell.innerText.trim() : '';
+
+
         mappedValues[header] = value;
       });
 
-      
+
       return mappedValues;
     });
 
-    console.log("printing the data");
-    console.log(data);
+    const data = {
+      "status": "success",
+      "message": "Information received succesfully.",
+      "data": {
+        "accepted": {
+          "content": [
+            {
+              ...response,
+              "trackNo": `${id}`,
+              "localLogisticsInfo": {
+                "courierCode": "TciExpress",
+                "courierNameCN": "TciExpress",
+                "courierNameEN": "TciExpress",
+                "courierHomePage": "https://www.tciexpress.in/",
+                "courierTrackingLink": url
+              }
+            }
+          ],
+        },
+      },
+      "msg": "Success",
+    }
+
+
 
     await browser.close();
     res.send({ data });
@@ -48,4 +76,14 @@ export const tciscrap = CatchAsyncError(async (req: Request, res: Response) => {
     res.status(500).send("No data found");
   }
 });
+
+
+
+
+
+
+
+
+
+
 

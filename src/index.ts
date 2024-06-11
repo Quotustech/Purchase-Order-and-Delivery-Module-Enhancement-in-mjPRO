@@ -7,31 +7,13 @@ import ErrorHandler from "./utils/errorHandler";
 import { ErrorMiddleware } from "./middlewares/error";
 
 
-import { tciscrap } from "./controllers/v1/tciScrap.controller";
-import { tracking } from "./controllers/v1/tracking.controller";
 const app = express();
 const port = process.env.PORT;
 
 app.use(cors());
 app.use(customMorgan);
 
-app.use('/api/v1/track/:id', (req, res, next) => {
-  const { id } = req.params;
-  const { courierNameEN } = (req as any).query;
-  
-  (req as any).id = id;
-  
-  if (courierNameEN === "tciExpress") {
-    
-   
-      (req as any).controller = tciscrap; 
-  } else {
-   
-     
-      (req as any).controller = tracking; 
-  }
-  next();
-});
+
 app.use("/api" , apiRoutes);
 
 app.get("/", (req: Request, res: Response) => {
