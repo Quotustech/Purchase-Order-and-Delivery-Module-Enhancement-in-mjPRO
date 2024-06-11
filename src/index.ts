@@ -15,23 +15,24 @@ const port = process.env.PORT;
 app.use(cors());
 app.use(customMorgan);
 
-app.use('/api/v1/track/:id', (req, res, next) => {
-  const { id } = req.params;
-  const { courierNameEN } = (req as any).query;
+// app.use('/api/v1/track/:id', (req, res, next) => {
+//   const { id } = req.params;
+//   const { courierNameEN } = (req as any).query;
   
-  (req as any).id = id;
+//   (req as any).id = id;
   
-  if (courierNameEN === "tciExpress") {
+//   if (courierNameEN === "tciExpress") {
     
    
-      (req as any).controller = tciscrap; 
-  } else {
+//       (req as any).controller = tciscrap; 
+//   } else {
    
      
-      (req as any).controller = tracking; 
-  }
-  next();
-});
+//       (req as any).controller = tracking; 
+//   }
+//   next();
+// });
+
 app.use("/api" , apiRoutes);
 
 app.get("/", (req: Request, res: Response) => {
