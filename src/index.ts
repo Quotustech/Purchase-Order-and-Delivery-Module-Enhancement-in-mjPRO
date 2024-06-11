@@ -7,8 +7,6 @@ import ErrorHandler from "./utils/errorHandler";
 import { ErrorMiddleware } from "./middlewares/error";
 
 
-import { tciscrap } from "./controllers/v1/tciScrap.controller";
-import { tracking } from "./controllers/v1/tracking.controller";
 const app = express();
 const port = process.env.PORT;
 
